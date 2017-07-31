@@ -23,7 +23,7 @@ class orderList extends Component {
         <Image
           style={styles.icon}
           resizeMode={Image.resizeMode.cover}
-          source={require('../../assets/DSC_8225.jpg')}
+          source={require('../../assets/avatar.jpg')}
         />
         <Text style={{ marginBottom: 10 }}>
             The idea with React Native Elements is more about component structure than actual design.

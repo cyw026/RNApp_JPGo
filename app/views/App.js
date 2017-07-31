@@ -6,7 +6,9 @@ import { Button, Icon } from 'react-native-elements'
 
 import HomeTab from './home/HomePage';
 import OrderPage from './order/OrderPage';
+
 import MyProfilePage from './myProfile/ProfilePage';
+import LanguageSetting from './myProfile/LanguageSetting';
 
 import LoginScreen from './login/LoginScreen';
 
@@ -48,12 +50,13 @@ const HomeScreen = TabNavigator(
         tabBarLabel: '我的',
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
-            name="wpforms"
+            name="person"
             size={30}
-            type="font-awesome"
+            // type="font-awesome"
             color={tintColor}
           />
         ),
+        header:null,
       },
     },
   },
@@ -66,6 +69,7 @@ const HomeScreen = TabNavigator(
     },
     navigationOptions: {
       headerStyle: {backgroundColor: '#03A9F4'},
+      headerLeft:null
     }
   },
 );
@@ -88,23 +92,33 @@ const MyApp = StackNavigator(
 {
   LoginScreen: {
     screen: LoginScreen,
-    path: '/',
+    path: '/login',
+    navigationOptions: () => ({
+      headerStyle: {backgroundColor: '#03A9F4'},
+      headerTintColor: '#fff',
+      headerLeft:null
+    }),
+  },
+  MainScene: {
+    screen: HomeScreen,
+    path: '/home',
     navigationOptions: () => ({
       headerStyle: {backgroundColor: '#03A9F4'},
       headerTintColor: '#fff',
     }),
   },
-  MainScene: {
-    screen: HomeScreen,
-    path: '/',
+  LanguageSetting: {
+    screen: LanguageSetting,
+    path: '/profile/lang',
     navigationOptions: () => ({
+      title: '语言切换',
       headerStyle: {backgroundColor: '#03A9F4'},
       headerTintColor: '#fff',
     }),
-  }
+  },
 },
 {
-  initialRouteName: 'LoginScreen',
+  initialRouteName: 'MainScene',
 })
 
 export default MyApp;
