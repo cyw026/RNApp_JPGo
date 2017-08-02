@@ -6,6 +6,7 @@ import { Card, Divider, Button, Icon, List, ListItem, Avatar } from 'react-nativ
 import { Tabs, WhiteSpace, Badge } from 'antd-mobile'
 import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-scrollable-tab-view'
 
+import I18n from '../../i18n/i18n';
 import colors from 'HSColors'
 import socialColors from 'HSSocialColors'
 import fonts from 'HSFonts'
@@ -14,6 +15,10 @@ const SCREEN_WIDTH = Dimensions.get('window').width
 const SCREEN_HEIGHT = Dimensions.get('window').height
 
 const TabPane = Tabs.TabPane
+
+// I18n.defaultLocale = 'zh-Hans';
+// I18n.locale = 'zh-Hans';
+I18n.currentLocale();
 
 const dataSource = [
   [{
@@ -35,7 +40,7 @@ const dataSource = [
     goto: 'LoginScreen'
   },
   {
-    title: '语言切换',
+    title: I18n.t('title_langSetting'),
     icon: 'flight-takeoff',
     color: colors.primary,
     goto: 'LanguageSetting'
@@ -51,6 +56,7 @@ const dataSource = [
 class Profile extends Component {
   constructor (props) {
     super(props)
+    console.log('currentLocale:' + I18n.currentLocale())
   }
 
   render () {

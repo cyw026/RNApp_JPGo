@@ -10,6 +10,15 @@ import colors from 'HSColors'
 import socialColors from 'HSSocialColors'
 import fonts from 'HSFonts'
 
+
+import I18n from '../../i18n/i18n';
+import { getLanguages } from 'react-native-i18n'
+
+
+// I18n.defaultLocale = "zh_CN";
+// I18n.locale = "zh_CN";
+
+
 const SCREEN_WIDTH = Dimensions.get('window').width
 const SCREEN_HEIGHT = Dimensions.get('window').height
 
@@ -17,15 +26,19 @@ const TabPane = Tabs.TabPane
 
 const languages = [
   {
-    value: 0,
+    value: 'zh_CN',
     label: '简体中文',
   },
   {
-    value: 1,
+    value: 'zh-Hans',
     label: '繁体中文',
   },
   {
-    value: 2,
+    value: 'en',
+    label: 'English',
+  },
+  {
+    value: 'zh_JP',
     label: 'にほんご',
   }
 ]
@@ -38,14 +51,19 @@ const RadioItem = Radio.RadioItem;
 class Profile extends Component {
   constructor(props) {
       super(props)
-      this.state = { value: 0 }
+      this.state = { value: 'en' }
+      // console.log('currentLocale:' + I18n.currentLocale())
   }
 
 
   onChange = (value) => {
-      console.log('checkbox');
-      this.setState({
-          value,
+      console.log('onChange:' + value);
+      // I18n.defaultLocale = value;
+      // I18n.locale = value;
+      // I18n.currentLocale();
+
+      this.setState(() =>{
+          return {value: value}
       });
   };
 

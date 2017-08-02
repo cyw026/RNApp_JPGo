@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Button, Icon } from 'react-native-elements'
+import I18n from '../i18n/i18n';
 
 import HomeTab from './home/HomePage';
 import OrderPage from './order/OrderPage';
@@ -15,6 +16,10 @@ import LoginScreen from './login/LoginScreen';
 // import HomePage from './home/HomePage';
 // import OrderPage from './order/OrderPage';
 // import MyProfilePage from './home/HomePage';
+
+I18n.defaultLocale = 'zh-Hans';
+I18n.locale = 'zh-Hans';
+I18n.currentLocale();
 
 const HomeScreen = TabNavigator(
   {
@@ -111,7 +116,7 @@ const MyApp = StackNavigator(
     screen: LanguageSetting,
     path: '/profile/lang',
     navigationOptions: () => ({
-      title: '语言切换',
+      title: I18n.t('title_langSetting'),
       headerStyle: {backgroundColor: '#03A9F4'},
       headerTintColor: '#fff',
     }),

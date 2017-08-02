@@ -8,28 +8,12 @@ import I18n from './app/i18n/i18n';
 
 import App from './app/views/App';
 
-I18n.defaultLocale = "zh_CN";
-I18n.locale = "zh_CN";
-
-// I18n.currentLocale();
-
 import {
   AppRegistry,
   StyleSheet,
   Text,
   View
 } from 'react-native';
-
-I18n.fallbacks = true
-
-I18n.translations = {
-  zh_CN: {
-    greeting: 'local {I18n.currentLocale()}'
-  },
-  fr: {
-    greeting: 'Bonjour!'
-  }
-}
 
 // class RNApp_JPGo extends React.Component {
 //   render () {
