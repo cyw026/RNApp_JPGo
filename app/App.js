@@ -3,19 +3,14 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import { Button, Icon } from 'react-native-elements'
-import I18n from '../i18n/i18n';
+import I18n from './i18n/i18n';
 
-import HomeTab from './home/HomePage';
-import OrderPage from './order/OrderPage';
+import HomeTab from './views/home/HomePage';
+import OrderPage from './views/order/OrderPage';
 
-import MyProfilePage from './myProfile/ProfilePage';
-import LanguageSetting from './myProfile/LanguageSetting';
-
-import LoginScreen from './login/LoginScreen';
-
-// import HomePage from './home/HomePage';
-// import OrderPage from './order/OrderPage';
-// import MyProfilePage from './home/HomePage';
+import MyProfilePage from './views/myProfile/ProfilePage';
+import LanguageSetting from './views/myProfile/LanguageSetting';
+import LoginScreen from './views/login/LoginScreen';
 
 I18n.defaultLocale = 'zh-Hans';
 I18n.locale = 'zh-Hans';
@@ -78,20 +73,6 @@ const HomeScreen = TabNavigator(
     }
   },
 );
-
-class Profile extends Component {
-  // constructor (props) {
-  //   super(props)
-  // }
-
-  render () {
-    // const { navigation } = this.props
-    // navigation.navigate('LoginScreen')
-    return (
-      <View></View>
-    )
-  }
-}
 
 const MyApp = StackNavigator(
 {

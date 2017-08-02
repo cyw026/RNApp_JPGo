@@ -8,8 +8,9 @@ import { Tabs, WhiteSpace, Badge, } from 'antd-mobile'
 import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-scrollable-tab-view'
 
 import colors from 'HSColors'
-import socialColors from 'HSSocialColors'
-import fonts from 'HSFonts'
+
+import { observer, inject } from 'mobx-react';
+@inject('store') @observer
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -19,6 +20,50 @@ const TabPane = Tabs.TabPane
 class LoginScreen extends Component {
     constructor(props) {
         super(props);
+    }
+
+    state = {
+        username: '',
+        password: '',
+        error: '',
+        loggingIn: false
+    }
+
+    changeUsername = (username) => {
+        this.setState({
+            username
+        });
+    }
+
+    changePassword = (password) => {
+        this.setState({
+            password
+        });
+    }
+
+    login = () => {
+        const { username, password, loggingIn } = this.state,
+              { store } = this.props;
+
+        if (loggingIn) return;
+
+        if (!username || !password) {
+            this.setState({
+                error: 'Missing info'
+            });
+        }else{
+            this.setState({ loggingIn: true });
+            store.login(username, password).then(success => {
+                if (success) {
+                    store.navigateBack();
+                }else{
+                    this.setState({
+                        loggingIn: false,
+                        error: "Bad login"
+                    });
+                }
+            });
+        }
     }
 
     render() {
