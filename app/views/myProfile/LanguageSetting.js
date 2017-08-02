@@ -4,7 +4,7 @@ import { StackNavigator } from 'react-navigation'
 import { Card, Divider, Button, Icon, List, ListItem, Avatar } from 'react-native-elements'
 
 import { Tabs, WhiteSpace, Badge } from 'antd-mobile'
-import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-scrollable-tab-view'
+import ScrollableTabView, { ScrollableTabBar, DefaultTabBar } from 'react-native-scrollable-tab-view'
 
 import colors from 'HSColors'
 import socialColors from 'HSSocialColors'
@@ -67,20 +67,20 @@ class Profile extends Component {
       });
   };
 
-  render () {
+  render() {
     const { navigation } = this.props
     const { value } = this.state;
 
     return (
-      <View style={{height: SCREEN_HEIGHT}}>
+      <View style={{ height: SCREEN_HEIGHT }}>
         <ScrollView style={styles.scrollView}>
 
-          <List containerStyle={{marginTop: 0}}>
+          <List containerStyle={{ marginTop: 0 }}>
             {
               languages.map((i) => (
                 <RadioItem key={i.value} checked={value === i.value} onChange={() => this.onChange(i.value)}>
                   {i.label}
-                 </RadioItem>
+                </RadioItem>
               ))
             }
           </List>
