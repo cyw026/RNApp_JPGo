@@ -1,12 +1,12 @@
 
 import { action, computed, observable, extendObservable } from 'mobx';
-import * as firebase from 'firebase';
+import firebase from './firebase';
 import take from 'lodash/take';
-import HN from './service/API';
+import HN from './service/Api';
 
-firebase.initializeApp({
-    databaseURL: 'https://hacker-news.firebaseio.com'
-});
+// firebase.initializeApp({
+//     databaseURL: 'https://hacker-news.firebaseio.com'
+// });
 
 const N_STORIES = 30,
       LANG_API_KEY = 'AIzaSyCSE5mekK1XxfDMQde8bywlaOMIdN5L7ug';
@@ -142,37 +142,48 @@ class Store {
     @action register() {
       firebase.auth()
       .createUserWithEmailAndPassword(email, password)
+      .then(rst => {
+        console.log(rst)
+      })
       .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
+        console.log(errorMessage)
         // ...
       });
     }
 
     @action login(username, password) {
-        return HN.login(username, password)
-            .then(success => {
-                if (success) {
-                    this.user.username = username;
-                    this.user.loggedIn = true;
+        return new Promise((resolve, reject) => {
 
-                    if (this.user.actionAfterLogin) {
-                        this.user.actionAfterLogin();
-                    }
-                }
+          //   firebase.auth()
+          //   .createUserWithEmailAndPassword(username, password)
+          //   .then(rst => {
+          //     console.log(rst)
+          //   })
+          //   .catch(function(error) {
+          //     // Handle Errors here.
+          //     var errorCode = error.code;
+          //     var errorMessage = error.message;
+          //     // ...
+          //     console.log(errorMessage)
+          //   });
+          // });
 
-                return success;
-            });
-
-        firebase.auth()
-            .signInWithEmailAndPassword(email, password)
+            firebase.auth()
+            .signInWithEmailAndPassword(username, password)
+            .then(rst => {
+              console.log('signInWithEmailAndPassword');
+              resolve(rst);
+            })
             .catch(function(error) {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 // ...
             });
+          });
 
     }
 

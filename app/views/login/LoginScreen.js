@@ -3,19 +3,18 @@ import { View, Text, FlatList, ScrollView, StyleSheet, Dimensions, Platform } fr
 import { StackNavigator } from 'react-navigation'
 import { Card, Divider, Button, Icon } from 'react-native-elements'
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
-
-import { Tabs, WhiteSpace, Badge, } from 'antd-mobile'
-import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-scrollable-tab-view'
+import { Keyboard } from 'react-native'
 
 import colors from 'HSColors'
 
-import { observer, inject } from 'mobx-react';
-@inject('store') @observer
 
-const SCREEN_WIDTH = Dimensions.get('window').width
-const SCREEN_HEIGHT = Dimensions.get('window').height
 
-const TabPane = Tabs.TabPane
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+
+import { observer, inject } from 'mobx-react'
+@inject('store') 
+@observer
 
 class LoginScreen extends Component {
     constructor(props) {
@@ -23,10 +22,31 @@ class LoginScreen extends Component {
     }
 
     state = {
-        username: '',
-        password: '',
+        username: 'cyw026@163.com',
+        password: '123456',
         error: '',
         loggingIn: false
+    }
+
+    componentWillMount() {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+    }
+
+    componentWillUnmount() {
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
+
+    _keyboardDidShow() {
+        // alert('Keyboard Shown');
+    }
+
+    _keyboardDidHide() {
+        // alert('Keyboard Hidden');
+    }
+    _onTouchStart() {
+      Keyboard.dismiss
     }
 
     changeUsername = (username) => {
@@ -42,6 +62,8 @@ class LoginScreen extends Component {
     }
 
     login = () => {
+      console.log('login now')
+      const { navigation } = this.props;
         const { username, password, loggingIn } = this.state,
               { store } = this.props;
 
@@ -54,8 +76,11 @@ class LoginScreen extends Component {
         }else{
             this.setState({ loggingIn: true });
             store.login(username, password).then(success => {
+                console.log('login success ! ! !' + JSON.stringify(success))
                 if (success) {
-                    store.navigateBack();
+                    // store.navigateBack();
+                    navigation.navigate('MainScene')
+
                 }else{
                     this.setState({
                         loggingIn: false,
@@ -69,28 +94,36 @@ class LoginScreen extends Component {
     render() {
       const { navigation } = this.props;
         return (
-                  <View style={styles.screen}>
-                    <View style={styles.hero}>
-                      <Icon color="white" name="whatshot" size={62} type="material" />
-                      <Text style={styles.heading}>Buttons&Icons</Text>
-                    </View>
+                <View style={styles.screen} onTouchStart= {this._onTouchStart}>
+                  <View style={styles.hero}>
+                    <Icon color="white" name="whatshot" size={62} type="material" />
+                    <Text style={styles.heading}>Buttons&Icons</Text>
+                  </View>
+                  <Text style={{marginTop: 10, color: 'red'}}>
+                    {this.state.error}
+                  </Text>
                   <FormLabel />
                   <FormLabel>手机号码</FormLabel>
-                  <FormInput />
+                  <FormInput 
+                  value={this.state.username} 
+                  onSubmitEditing={Keyboard.dismiss}/>
                   <FormValidationMessage></FormValidationMessage>
                   
                   <FormLabel>登录密码</FormLabel>
-                  <FormInput />
+                  <FormInput 
+                  value={this.state.password} 
+                  onSubmitEditing={Keyboard.dismiss}/>
                   <FormValidationMessage></FormValidationMessage>
                   <Button
                     buttonStyle={styles.button}
                     backgroundColor={colors.primary}
                     icon={{ name: 'account', type: 'material-community' }}
                     onPress={() =>
-                      navigation.navigate('MainScene')}
+                      this.login()
+                    }
                     title="登录"
                   />
-                  </View>
+                </View>
         );
     }
 }
@@ -114,20 +147,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 40,
     backgroundColor: colors.primary,
-  },
-  titleContainer: {},
-  title: {
-    textAlign: 'center',
-    color: colors.grey2,
-    ...Platform.select({
-      ios: {
-        fontFamily: fonts.ios.black,
-      },
-    }),
-  },
-  socialRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
   },
 })
 

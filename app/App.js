@@ -12,6 +12,12 @@ import MyProfilePage from './views/myProfile/ProfilePage';
 import LanguageSetting from './views/myProfile/LanguageSetting';
 import LoginScreen from './views/login/LoginScreen';
 
+import { useStrict } from 'mobx';
+import { Provider, observer } from 'mobx-react/native';
+useStrict(true);
+import Store from './Store';
+
+
 I18n.defaultLocale = 'zh-Hans';
 I18n.locale = 'zh-Hans';
 I18n.currentLocale();
@@ -104,7 +110,17 @@ const MyApp = StackNavigator(
   },
 },
 {
-  initialRouteName: 'MainScene',
+  initialRouteName: 'LoginScreen',
 })
 
-export default MyApp;
+@observer
+class App extends Component {
+    render() {
+        return (
+            <Provider store={Store}>
+                <MyApp />
+            </Provider>
+        )
+    }
+}
+export default App;
