@@ -154,25 +154,5 @@ const styles = StyleSheet.create({
     marginTop: 8
   }
 })
-const OrderPage = StackNavigator({
-  OrderList: {
-    screen: OrderList,
-    path: '/',
-    navigationOptions: () => ({
-      title: '订单管理',
-      headerStyle: {backgroundColor: '#03A9F4'},
-      headerTintColor: '#fff',
-    }),
-  },
-  OrderDetail: {
-    screen: OrderList,
-    path: '/',
-    navigationOptions: () => ({
-      title: '日购app'
-    })
-  },
-},{
-    // headerMode: 'none',
-})
 
 export default OrderList

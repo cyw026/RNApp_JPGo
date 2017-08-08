@@ -95,6 +95,7 @@ const MyApp = StackNavigator(
     screen: HomeScreen,
     path: '/home',
     navigationOptions: () => ({
+      title: '新订单',
       headerStyle: {backgroundColor: '#03A9F4'},
       headerTintColor: '#fff',
     }),
