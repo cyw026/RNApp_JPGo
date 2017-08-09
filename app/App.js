@@ -28,6 +28,7 @@ const HomeScreen = TabNavigator(
       screen: HomeTab,
       path: '/home',
       navigationOptions: {
+        title: '新订单',
         tabBarLabel: '新订单',
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
@@ -43,6 +44,7 @@ const HomeScreen = TabNavigator(
       screen: OrderPage,
       path: '/order',
       navigationOptions: {
+        title: '订单管理',
         tabBarLabel: '订单管理',
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon name="list" size={30} type="entypo" color={tintColor} />
@@ -67,7 +69,7 @@ const HomeScreen = TabNavigator(
     },
   },
   {
-    initialRouteName: 'FormsTab',
+    initialRouteName: 'HomeTab',
     animationEnabled: false,
     swipeEnabled: false,
     tabBarOptions: {
@@ -88,14 +90,14 @@ const MyApp = StackNavigator(
     navigationOptions: () => ({
       headerStyle: {backgroundColor: '#03A9F4'},
       headerTintColor: '#fff',
-      headerLeft:null
+      headerLeft:null,
+      header:null,
     }),
   },
   MainScene: {
     screen: HomeScreen,
     path: '/home',
     navigationOptions: () => ({
-      title: '新订单',
       headerStyle: {backgroundColor: '#03A9F4'},
       headerTintColor: '#fff',
     }),

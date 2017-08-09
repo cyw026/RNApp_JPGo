@@ -1,26 +1,12 @@
 import React, { Component } from 'react'
 import { View, Text, FlatList, ScrollView, StyleSheet, Dimensions } from 'react-native'
-import { StackNavigator } from 'react-navigation'
 import { Card, Divider, Button } from 'react-native-elements'
-
-import { Tabs, WhiteSpace, Badge, } from 'antd-mobile'
 import ScrollableTabView, {ScrollableTabBar, DefaultTabBar} from 'react-native-scrollable-tab-view'
 
 import colors from 'HSColors'
-import socialColors from 'HSSocialColors'
-import fonts from 'HSFonts'
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const SCREEN_HEIGHT = Dimensions.get('window').height
-
-const TabPane = Tabs.TabPane
-
-function callback (key) {
-  console.log('onChange', key)
-}
-function handleTabClick (key) {
-  console.log('onTabClick', key)
-}
 
 class OrderList extends Component {
   constructor (props) {
@@ -50,16 +36,16 @@ class OrderList extends Component {
 }
 
 class OrderTab extends Component {
-    constructor(props) {
-        super(props);
+  constructor (props) {
+    super(props)
         this.renderRow = this.renderRow.bind(this)
-    }
+  }
 
-    getRestaurants () {
-      return require('../../service/data/restaurants.json')
-    }
+  getRestaurants () {
+    return require('../../service/data/restaurants.json')
+  }
 
-    renderRow (restaurant) {
+  renderRow (restaurant) {
     return (
       <Card containerStyle={styles.car}>
         <View style={{justifyContent: 'space-between', flexDirection: 'row', marginBottom: 10}}>
@@ -104,30 +90,30 @@ class OrderTab extends Component {
     )
   }
 
-    render() {
-        return (
-                  <ScrollView style={styles.screen}>
-                    <Card containerStyle={styles.car}>
-                      <Text style={{textAlign: 'center'}}>今日共计
-                        <Text style={{color: colors.primary}}>9</Text>
+  render () {
+    return (
+      <ScrollView style={styles.screen}>
+        <Card containerStyle={styles.car}>
+          <Text style={{textAlign: 'center'}}>今日共计
+            <Text style={{color: colors.primary}}>9</Text>
                           单，金额
-                        <Text style={{color: colors.primary}}>134</Text>
+            <Text style={{color: colors.primary}}>134</Text>
                           元
-                      </Text>
-                    </Card>
-                    <FlatList
-                      data={this.getRestaurants()}
-                      keyExtractor={(item, index) => item.name}
-                      renderItem={({item}) => this.renderRow(item)}
-                    />
-                  </ScrollView>
-        );
+          </Text>
+        </Card>
+        <FlatList
+          data={this.getRestaurants()}
+          keyExtractor={(item, index) => item.name}
+          renderItem={({item}) => this.renderRow(item)}
+        />
+      </ScrollView>
+    )
     }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   screen: {
     backgroundColor: '#EFF0F1'
