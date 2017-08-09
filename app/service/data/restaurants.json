@@ -4,7 +4,12 @@
   "description": "Gaspar is a delightful French restaurant in San Francisco’s Financial District that is inspired by the romantic, bustling Paris of old.\n\nLocated near famed Union Square, our richly-designed interiors make you feel as if you are truly in Paris and provide the perfect setting for enjoying our exquisite classic and modern French fare such as Duck Leg Confit and always popular Steak Frites.\n\nGaspar is a delightful French restaurant in San Francisco’s Financial District that is inspired by the romantic, bustling Paris of old. Located near famed Union Square, our richly-designed interiors make you feel as if you are truly in Paris and provide the perfect setting for enjoying our exquisite classic and modern French fare such as Duck Leg Confit and always popular Steak Frites.",
   "url": "https://gasparbrasserie.com",
   "image": { "url": "https://shoutem.github.io/static/getting-started/restaurant-1.jpg" },
-  "mail": "info@gasparbrasserie.com"
+  "mail": "info@gasparbrasserie.com",
+  "goods": [
+    {
+
+    }
+  ]
 }, {
   "name": "Chalk Point Kitchen",
   "address": "527 Broome St, New York, NY 10013",
