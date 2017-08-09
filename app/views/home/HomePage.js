@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, ScrollView, RefreshControl, FlatList } from 'react-native'
-import { Card, Divider, Button } from 'react-native-elements'
+import { View, Text, StyleSheet, ScrollView, RefreshControl, FlatList, Dimensions } from 'react-native'
+import { Card, Divider, Button, List, ListItem, Icon } from 'react-native-elements'
+import Collapse from '../../components/collapsable-panel'
+
 import colors from 'HSColors'
 
 class HomePage extends Component {
@@ -26,35 +28,102 @@ class HomePage extends Component {
     }, 1000)
   }
 
+  onCollapseToggle () {
+    
+  }
+
   renderRow (restaurant) {
     return (
-      <Card containerStyle={styles.car}>
-        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginBottom: 10 }}>
+      <Card containerStyle={styles.car}
+      imageStyle={{backgroundColor: '#ff3'}}
+      >
+        <View style={ styles.titleContainer }>
           <View>
-            <Text style={{ color: colors.grey1 }}>
+            <Text style={{ color: '#fff', fontSize: 15, fontWeight: '700'}}>
                             预计取货时间
             </Text>
-            <Text
-              style={styles.pick_up}>现金支付</Text>
           </View>
-          <Text style={{ color: colors.grey1 }}>
-                        05-17 9:00~11:00
+          <Text style={{ color: '#fff', fontSize: 15, fontWeight: '700'}}>
+                        周五 9:00~11:00
           </Text>
         </View>
         <Divider />
-        <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', marginTop: 10 }}>
-          <Text style={{ flex: 2, color: colors.grey1 }}>
-                        蔡先生
-            <Text style={{ color: colors.primary }}>
-                            (13580446242)
-            </Text>
+          <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', padding: 10 }} >
+          <Icon
+            onPress={() => console.log('hello')}
+            color={colors.primary}
+            name="account-circle"
+          />
+          <Text style={{ flex: 2, color: colors.grey1 , paddingLeft: 8 }}>
+            cyw026*****
           </Text>
-          <Text style={{ color: colors.primary, borderColor: colors.primary, borderWidth: 1, borderRadius: 10, padding: 3, fontSize: 10 }}>店铺新客</Text>
+          <Button
+            containerViewStyle={{marginRight: 0}}
+            buttonStyle={{padding: 0}}
+            backgroundColor='transparent'
+            color={colors.primary}
+            iconRight
+            icon={{ name: 'place', color: colors.primary }}
+            title="1.1km"
+            fontSize={Number(14)}
+            onPress={this.toggle}
+          />
+        </View> 
+        <Divider style={{ height: 4 }}/>
+        <View style={{paddingLeft: 10, paddingRight: 10}}>
+          <Collapse onToggle = {() =>
+            this.onCollapseToggle()
+          }
+          expanded={true}
+          title='商品'
+          >
+          <List containerStyle={styles.listContainer}>
+              {
+                restaurant.goods.map((item, i) => (
+                  <ListItem
+                    key={i}
+                    title={item.name}
+                    titleStyle={styles.listItemTitle}
+                    leftIcon={{name: item.icon, color: item.color}}
+                    hideChevron={true}
+                    containerStyle={{marginBottom: 0, marginTop: 0, borderTopWidth: 0, borderBottomWidth: 0, marginLeft: 0}}
+                  />
+                ))
+              }
+            </List>
+
+          </Collapse>
+          <Divider />
+          <List containerStyle={styles.listContainer}>
+            <ListItem
+              title="支付方式"
+              leftIcon={{}}
+              rightTitle="现金支付"
+              rightIcon={{}}
+              hideChevron={true}
+              containerStyle={styles.ListItemContainer}
+            />
+            <Divider />
+            <ListItem
+              title="下单时间"
+              leftIcon={{}}
+              rightTitle="08-08 11:00"
+              rightIcon={{}}
+              hideChevron={true}
+              containerStyle={styles.ListItemContainer}
+            />
+            <Divider />
+            <ListItem
+              leftIcon={{}}
+              subtitle="订单号码: 83988728376878762"
+              rightIcon={{}}
+              hideChevron={true}
+              containerStyle={styles.ListItemContainer}
+            />
+          </List>
         </View>
-        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 10 }}>
-          <Text>1.1km</Text>
-        </View>
-        <View style={{ flexDirection: 'row' }}>
+        {/* <Divider /> */}
+        <View style={{ flexDirection: 'row', marginTop: 20 }}>
           <Button
             backgroundColor='#EDEEEF'
             color='#000000'
@@ -96,11 +165,40 @@ const styles = StyleSheet.create({
     backgroundColor: '#EFF0F1'
   },
   car: {
-    // borderRadius: 10,
+    borderRadius: 10,
     borderWidth: 0,
-    // borderColor: '#fff',
-    borderTopWidth: 2,
-    borderTopColor: '#03A9F4'
+    borderTopWidth: 0,
+    borderTopColor: '#03A9F4',
+    paddingLeft: 0,
+    paddingRight: 0,
+    paddingTop: 0,
+    overflow: 'hidden'
+  },
+  titleContainer: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    backgroundColor: colors.primary,
+    padding: 15,
+    paddingTop: 12,
+    paddingBottom: 12,
+    borderRadius: 0
+  },
+  listContainer: {
+    marginBottom: 0,
+    marginTop: 0,
+    borderTopWidth: 0,
+    borderBottomWidth: 0
+  },
+  ListItemContainer: {
+    marginBottom: 0,
+    marginTop: 0,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    marginLeft: 0
+  },
+  listItemTitle: {
+    color: colors.grey3,
+    fontSize: 14
   },
   pick_up: {
     color: '#FA8C98',

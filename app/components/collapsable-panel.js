@@ -1,6 +1,7 @@
 'use strict';
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
   StyleSheet,
   Text,
@@ -9,12 +10,16 @@ import {
   TouchableHighlight,
   Animated
 } from 'react-native'
-import { Icon } from 'react-native-elements'
+import { Icon, Divider, Button } from 'react-native-elements'
+import { ViewPropTypes as RNViewPropTypes } from 'react-native';
+const ViewPropTypes = RNViewPropTypes || View.propTypes;
+
+import colors from 'HSColors'
 
 
 const ICONS = {
-  up: require('./images/arrow-up.png'),
-  down: require('./images/arrow-down.png')
+	up: require('./img/arrow_up.png'),
+	down: require('./img/arrow_up.png')
 }
 
 export default class Collapse extends Component {
@@ -22,9 +27,13 @@ export default class Collapse extends Component {
     super(props)
     
     this.state = {
+      icon: '',
+      title: '',
       expanded: props.expanded,
       animation: new Animated.Value()
     }
+  }
+  componentDidMount() {
   }
 
   toggle = () => {
@@ -33,7 +42,10 @@ export default class Collapse extends Component {
     const initialValue = expanded ? minHeight + maxHeight : minHeight
     const finalValue = expanded ? minHeight : minHeight + maxHeight
 
-    this.setState({ expanded: !expanded })
+    this.setState({
+      expanded: !expanded
+    });
+
     animation.setValue(initialValue)
 
     Animated.timing(animation, {
@@ -44,21 +56,35 @@ export default class Collapse extends Component {
   }
 
   render() {
-    const { expanded, animation, maxHeight } = this.state
-    const icon = expanded ? 'up' : 'down'
+    const { expanded, animation, maxHeight,  } = this.state
+    const { containerStyle } = this.props
+    const icon = expanded ? 'keyboard-arrow-up' : 'keyboard-arrow-down'
 
     return (
-      <Animated.View style={[styles.container, { height: animation }]}>
+      <Animated.View style={[styles.container, { height: animation }, containerStyle]}>
         <View style={styles.titleContainer}
           onLayout={event => this.setState({ minHeight: event.nativeEvent.layout.height })}>
+          <Icon
+              onPress={() => console.log('hello')}
+              color={colors.primary}
+              name="local-grocery-store"
+              large
+            />
           <Text style={styles.title}>{this.props.title}</Text>
-          <TouchableHighlight
-            style={styles.button}
+          <Button
+            containerViewStyle={{marginRight: 0}}
+            buttonStyle={{padding: 0}}
+            iconRight
+            color={colors.primary}
+            backgroundColor='transparent'
+            icon={{ name: icon, color: colors.primary}}
+            title="详情"
+            fontSize={Number(14)}
             onPress={this.toggle}
-            underlayColor="#f1f1f1">
-            <Image style={styles.buttonImage} source={ICONS[icon]} />
-          </TouchableHighlight>
+          />
+        
         </View>
+        <Divider />
         {/*fixed bug in recent version of react-native that maxHeight will be changed when body is collapsed*/}
         <View style={styles.body}
           onLayout={event => !maxHeight && this.setState({ maxHeight: event.nativeEvent.layout.height })}>
@@ -69,81 +95,23 @@ export default class Collapse extends Component {
   }
 }
 
+Collapse.defaultProps = {
+    expanded: true
+  }
+
+Collapse.propTypes = {
+  containerStyle: ViewPropTypes.style,
+  titleStyle: PropTypes.func,
+  tintColor: PropTypes.string,
+  expanded: PropTypes.bool,
+  title: PropTypes.string,
+  onToggle: PropTypes.func
+};
+
+
 class Panel extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      fadeAnim: new Animated.Value(0),
-      icon: 'angle-right',
-      onPressed: null,
-      title: '',
-      children: null,
-      expanded: props.expanded,
-      animation: new Animated.Value()
-    };
-  }
-
-  componentDidMount() {
-    if (this.props.clickable) {
-      this.setState({
-        icon: this.props.icon,
-        onPressed: this.props.onPressed,
-        title: this.props.title
-      });
-    } else if (this.props.collapsible) {
-      Animated.timing(
-        this.state.fadeAnim,
-        { toValue: 1 }
-      ).start();
-      const openIcon = this.props.iconOpened || 'minus'
-      const activeIcon = this.props.iconActive || 'plus'
-      this.setState({
-        icon: this.props.showOnStart ? openIcon : activeIcon,
-        iconCollapsed: this.props.iconCollapsed || 'plus',
-        iconOpened: this.props.iconOpened || 'minus',
-        title: this.props.title
-      });
-    } else {
-      this.setState({
-        title: this.props.title
-      });
-    }
-
-    this._tintColor = this.props.tintColor || '#FFF';
-    this._iconSize = this.props.iconSize || 30;
-  }
 
   render() {
-
-    if (this.props.clickable) {
-      return this._renderClickable();
-    } else if (this.props.collapsible) {
-      return this._renderCollapsible();
-    } else {
-      return this._renderDefault();
-    }
-  }
-
-  _renderDefault() {
-    return (
-      <View style={styles.bar}>
-        <Text style={[styles.title, this.props.titleStyle]}>{this.state.title}</Text>
-      </View>
-    );
-  }
-
-  _renderClickable() {
-    return (
-      <TouchableHighlight style={styles.barWrapper} underlayColor='transparent' onPress={this.state.onPressed}>
-        <View style={[styles.bar, this.props.style]}>
-          <Text style={[styles.title, this.props.titleStyle]}>{this.state.title}</Text>
-          <Icon name={this.state.icon} size={this._iconSize} color={this._tintColor} style={styles.icon} />
-        </View>
-      </TouchableHighlight>
-    );
-  }
-
-  _renderCollapsible() {
     return (
       <View>
         <TouchableHighlight style={styles.barWrapper} underlayColor='transparent' onPress={() => { this._toggleView() }}>
@@ -159,43 +127,29 @@ class Panel extends Component {
       </View>
     );
   }
-
-  _toggleView() {
-    this.setState({
-      show: !this.state.show,
-      icon: this.state.show ? this.state.iconCollapsed : this.state.iconOpened
-    });
-  }
 }
-
-Panel.defaultProps = {
-    expanded: true
-  }
-
-Panel.propTypes = {
-  style: View.propTypes.style,
-  titleStyle: Text.propTypes.style,
-  tintColor: PropTypes.string,
-  expanded: PropTypes.bool,
-  title: PropTypes.string,
-  onToggle: PropTypes.func
-};
 
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    margin: 10,
     overflow: 'hidden'
   },
   titleContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 6,
+    paddingBottom: 6
   },
   title: {
     flex: 1,
     padding: 10,
     color: '#2a2f43',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+  },
+  collapseTitle: {
+    padding: 10,
+    color: '#03A9F4',
   },
   button: {
     justifyContent: 'center',
@@ -206,7 +160,6 @@ const styles = StyleSheet.create({
     height: 20
   },
   body: {
-    padding: 10,
-    paddingTop: 0
+    paddingTop: 0,
   }
 });

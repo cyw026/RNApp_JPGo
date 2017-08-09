@@ -113,7 +113,7 @@ const MyApp = StackNavigator(
   },
 },
 {
-  initialRouteName: 'LoginScreen',
+  initialRouteName: 'MainScene',
 })
 
 @observer
