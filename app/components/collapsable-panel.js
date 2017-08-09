@@ -8,7 +8,8 @@ import {
   View,
   Image,
   TouchableHighlight,
-  Animated
+  Animated,
+  Easing
 } from 'react-native'
 import { Icon, Divider, Button } from 'react-native-elements'
 import { ViewPropTypes as RNViewPropTypes } from 'react-native';
@@ -49,7 +50,8 @@ export default class Collapse extends Component {
     animation.setValue(initialValue)
 
     Animated.timing(animation, {
-      toValue: finalValue
+      toValue: finalValue,
+      duration: 250
     }).start()
 
     onToggle()
@@ -72,7 +74,7 @@ export default class Collapse extends Component {
             />
           <Text style={styles.title}>{this.props.title}</Text>
           <Button
-            containerViewStyle={{marginRight: 0}}
+            containerViewStyle={styles.buttonContainer}
             buttonStyle={{padding: 0}}
             iconRight
             color={colors.primary}
@@ -138,8 +140,12 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 6,
-    paddingBottom: 6
+  },
+  buttonContainer: {
+    marginRight: 0, 
+    paddingLeft: 15, 
+    paddingTop:15, 
+    paddingBottom: 15,
   },
   title: {
     flex: 1,

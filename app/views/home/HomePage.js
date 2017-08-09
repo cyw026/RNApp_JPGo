@@ -102,6 +102,7 @@ class HomePage extends Component {
               rightIcon={{}}
               hideChevron={true}
               containerStyle={styles.ListItemContainer}
+              wrapperStyle={styles.ListItemWrapper}
             />
             <Divider />
             <ListItem
@@ -111,6 +112,7 @@ class HomePage extends Component {
               rightIcon={{}}
               hideChevron={true}
               containerStyle={styles.ListItemContainer}
+              wrapperStyle={styles.ListItemWrapper}
             />
             <Divider />
             <ListItem
@@ -119,6 +121,7 @@ class HomePage extends Component {
               rightIcon={{}}
               hideChevron={true}
               containerStyle={styles.ListItemContainer}
+              wrapperStyle={styles.ListItemWrapper}
             />
           </List>
         </View>
@@ -190,10 +193,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0
   },
   ListItemContainer: {
-    marginBottom: 0,
-    marginTop: 0,
     borderTopWidth: 0,
     borderBottomWidth: 0,
+    paddingRight: 0,
+    paddingTop: 15,
+    paddingBottom: 15
+  },
+  ListItemWrapper: {
     marginLeft: 0
   },
   listItemTitle: {
